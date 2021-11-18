@@ -1,0 +1,67 @@
+cassandracontactpoints: localhost
+cassandraport: 9042
+cassandradcname: Cassandra
+cassandrausername: cassandra
+cassandrapassword: cassandra
+keyspace: event_generator_service_blue
+kafkabootstrapservers: localhost:9092
+eventProcessorTopic: cardSwipe.v1
+server:
+  port: 8080
+
+kafka:
+  bootstrap-servers: ${kafkabootstrapservers}
+  adf:
+    topic: ${eventProcessorTopic}
+  login-module: org.apache.kafka.common.seincurity.plain.PlainLoginModule
+  security-protocol: SASL_SSL
+  sasl-mechanism: PLAIN
+  clientId: event-generator-consumer
+  consumer:
+    concurrency: 1
+    max-poll-records: 20
+    offset-auto-reset: earliest
+    group: events-consumer-group
+  producer:
+    acks-config: all
+    linger: 1
+    timeout: 30000
+    batch-size: 16384
+    send-buffer: 131072
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  application:
+  data:
+    cassandra:
+      contact-points: ${cassandracontactpoints}
+      keyspace-name: ${keyspace}
+      port: ${cassandraport}
+      password: ${cassandrapassword}
+      username: ${cassandrausername}
+      local-datacenter: ${cassandradcname}
+  sleuth:
+    propagationKeys:
+      - x-adf-trace-id
+    log:
+      slf4j:
+        whitelisted-mdc-keys:
+          - x-adf-trace-id
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    cassandra:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles[http.server.requests]: 0.90,0.95,0.99
+  info:
+    git:
+      mode: full

@@ -1,0 +1,66 @@
+openapi: 3.0.1
+info:
+  title: Event Generator API
+  description: Event Generator API
+  version: 1.0.0
+
+paths:
+  /events/{batchSize}:
+    get:
+      parameters:
+        - name: batchSize
+          in: path
+          description: batch size to retrieve the no. of records
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Job still in progress, results not yet available
+          content: {}
+        200:
+          description: Returns event details
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/EventResponse'
+        400:
+          description: Bad Request.
+          content: {}
+        401:
+          description: Unauthorized.
+          content: {}
+        403:
+          description: Forbidden.
+          content: {}
+        500:
+          description: Unexpected error
+      deprecated: false
+
+definitions:
+  EventResponse:
+    type: object
+    properties:
+      eventLogKey:
+        $ref: '#/definitions/EventLogKey'
+      eventPayload:
+        type: string
+        description: Employee details payload
+      eventProcessedTime:
+        type: string
+        description: Event process date time
+      status:
+        type: string
+        description: Event process status(SUCCESS|FAIL)
+  EventLogKey:
+    type: object
+    properties:
+      id:
+        type: string
+        description: UUID
+      eventCreationTime:
+        type: string
+        description: Event creation date time
+      eventName:
+        type: string
+        description: Event name
