@@ -33,7 +33,7 @@ services:
     build:
       context: .
       args:
-        JAR_FILE: /springboot-cassandra.jar
+        JAR_FILE: /consumer-0.0.1.jar
     restart: always
     depends_on:
       - kafka

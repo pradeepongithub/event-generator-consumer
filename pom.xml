@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.event.generator.consumer</groupId>
-	<artifactId>event-generator-consumer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>consumer</artifactId>
+	<version>0.0.1</version>
 	<name>event-generator-consumer</name>
 	<description>Event Genarator Consumer Service</description>
 	<properties>
