@@ -22,7 +22,7 @@ public class EventConsumer {
         this.eventConsumerService = eventConsumerService;
     }
 
-    @KafkaListener(topics = "${kafka.adf.topic}", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${kafka.topic}", containerFactory = "kafkaListenerContainerFactory")
     public void consumeEvents(@Payload String payload,
                               @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
                               @Header("eventType") String eventTypeHeader,

@@ -1,18 +1,17 @@
-cassandracontactpoints: localhost
+cassandracontactpoints: cassandra
 cassandraport: 9042
 cassandradcname: Cassandra
 cassandrausername: cassandra
 cassandrapassword: cassandra
 keyspace: event_generator_service_blue
-kafkabootstrapservers: localhost:9092
+kafkabootstrapservers: broker:9092
 eventProcessorTopic: cardSwipe.v1
 server:
   port: 8080
 
 kafka:
   bootstrap-servers: ${kafkabootstrapservers}
-  adf:
-    topic: ${eventProcessorTopic}
+  topic: ${eventProcessorTopic}
   login-module: org.apache.kafka.common.seincurity.plain.PlainLoginModule
   security-protocol: SASL_SSL
   sasl-mechanism: PLAIN
@@ -22,12 +21,6 @@ kafka:
     max-poll-records: 20
     offset-auto-reset: earliest
     group: events-consumer-group
-  producer:
-    acks-config: all
-    linger: 1
-    timeout: 30000
-    batch-size: 16384
-    send-buffer: 131072
 spring:
   jackson:
     default-property-inclusion: non_null
