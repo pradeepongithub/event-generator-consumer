@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.event.generator.consumer</groupId>
 	<artifactId>consumer</artifactId>
@@ -17,6 +17,9 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<testcontainers.version>1.16.0</testcontainers.version>
+		<jib-maven-plugin.version>2.5.2</jib-maven-plugin.version>
+		<container.registry>pky.devcr.io</container.registry>
+		<container.repositorybase>pkydev</container.repositorybase>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -111,6 +114,30 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib-maven-plugin.version}</version>
+				<configuration>
+					<from>
+						<image>registry.hub.docker.com/openjdk:8-jdk-alpine</image>
+					</from>
+					<to>
+						<image>${container.registry}/${container.repositorybase}/${project.artifactId}</image>
+					</to>
+					<container>
+						<jvmFlags>
+							<jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+							<jvmFlag>-Xdebug</jvmFlag>
+							<jvmFlag>-Duser.timezone=GMT+08</jvmFlag>
+						</jvmFlags>
+						<mainClass>com.event.generator.consumer.EventGeneratorConsumerApplication</mainClass>
+						<!--<ports>
+							<port>8080</port>
+						</ports>-->
+					</container>
 				</configuration>
 			</plugin>
 		</plugins>
